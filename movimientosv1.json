@@ -1,0 +1,61 @@
+[{
+  "id": 1,
+  "fecha": "7/22/2019",
+  "importe": 55,
+  "latitud": -7.3100537,
+  "longitud": 112.6407229
+}, {
+  "id": 2,
+  "fecha": "4/9/2020",
+  "importe": 20,
+  "latitud": 59.913104,
+  "longitud": 10.7238941
+}, {
+  "id": 3,
+  "fecha": "8/24/2019",
+  "importe": 100,
+  "latitud": -9.6277897,
+  "longitud": -74.9749415
+}, {
+  "id": 4,
+  "fecha": "8/4/2019",
+  "importe": 33,
+  "latitud": 37.815669,
+  "longitud": 112.520954
+}, {
+  "id": 5,
+  "fecha": "1/13/2020",
+  "importe": 90,
+  "latitud": 49.1073208,
+  "longitud": 7.0685103
+}, {
+  "id": 6,
+  "fecha": "4/4/2020",
+  "importe": 85,
+  "latitud": -9.3583473,
+  "longitud": -77.5999083
+}, {
+  "id": 7,
+  "fecha": "9/23/2019",
+  "importe": 36,
+  "latitud": -6.2690475,
+  "longitud": 106.3287199
+}, {
+  "id": 8,
+  "fecha": "6/8/2020",
+  "importe": 42,
+  "latitud": 41.3486394,
+  "longitud": 19.8345726
+}, {
+  "id": 9,
+  "fecha": "6/3/2020",
+  "importe": 88,
+  "latitud": -6.6274275,
+  "longitud": 106.7529652
+}, {
+  "id": 10,
+  "fecha": "10/16/2019",
+  "importe": 90,
+  "latitud": 46.4270739,
+  "longitud": 16.5473979
+}]
