@@ -18,6 +18,10 @@ app.get('/', function(req, res) {
 })
 
 app.post('/', function(req, res) {
+  res.send("Hemos recibido su petición post cambiada");
+})
+
+app.post('/', function(req, res) {
   res.send("Hemos recibido su petición post");
 })
 
