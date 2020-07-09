@@ -6,6 +6,10 @@ port = process.env.PORT || 3000;
 var path = require('path');
 
 var requestjson = require('request-json');
+var urlMlabRaiz = "https://api.mlab.com/api/1/databases/nbuendia/collections";
+var apiKey="apiKey=GOLqWa850qO8tsdCUdby6eq9eKPInBkt";
+var clienteMlabRaiz;
+
 var urlClientes = "https://api.mlab.com/api/1/databases/nbuendia/collections/Clientes?apiKey=GOLqWa850qO8tsdCUdby6eq9eKPInBkt";
 var clienteMLab = requestjson.createClient(urlClientes)
 
@@ -83,5 +87,26 @@ app.get('/Clientes', function(req, res) {
 app.post('/Clientes', function(req, res) {
   clienteMLab.post('', req.body, function(err, resM, body) {
     res.send(body)
+  })
+})
+
+
+app.post('/Login', function(req, res) {
+  res.set("Access-Control-Allow-Headers", "Content-Type")
+  var email = req.body.email
+  var password = req.body.password
+  var query = 'q={"email":"'+ email +'","password":"' +password + '"}'
+  console.log(query)
+  var urlMLab = urlMlabRaiz + "/Usuarios?" + query + "&" + apiKey;
+  console.log(urlMLab)
+  clienteMlabRaiz = requestjson.createClient(urlMLab)
+  clienteMlabRaiz.get('', function(err, resM, body) {
+    if (!err) {
+      if (body.length == 1) { //Login ok, se encontro 1 documento
+        res.status(200).send('Usuario logado')
+      } else { //No se encontro al usuario
+        res.status(404).send('Usuario no encontrado')
+      }
+    }
   })
 })
