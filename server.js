@@ -4,10 +4,20 @@ var express = require('express'),
 app = express(),
 port = process.env.PORT || 3000;
 var path = require('path');
+
+var requestjson = require('request-json');
+var urlClientes = "https://api.mlab.com/api/1/databases/nbuendia/collections/Clientes?apiKey=GOLqWa850qO8tsdCUdby6eq9eKPInBkt";
+var clienteMLab = requestjson.createClient(urlClientes)
+
 app.listen(port);
 var bodyparser = require('body-parser');
 
 app.use(bodyparser.json());
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With,Content-Type, Accept")
+  next()
+})
 
 var movimientosJSON = require('./movimientosv2.json');
 
@@ -56,4 +66,22 @@ app.post('/v2/Movimientos', function(req, res) {
   nuevo.id = movimientosJSON.length + 1
   movimientosJSON.push(nuevo)
   res.send("Movimiento dado de alta")
+})
+
+app.get('/Clientes', function(req, res) {
+
+  clienteMLab.get('', function(err, resM, body) {
+    if (err) {
+      console.log(body)
+    } else {
+      res.send(body);
+    }
+  })
+})
+
+
+app.post('/Clientes', function(req, res) {
+  clienteMLab.post('', req.body, function(err, resM, body) {
+    res.send(body)
+  })
 })
