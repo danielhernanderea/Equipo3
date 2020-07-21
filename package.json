@@ -1,5 +1,5 @@
 {
-  "name": "apimx",
+  "name": "apibd",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "express": "^4.16.2",
+    "mongoose": "^5.9.25",
     "request-json": "^0.6.5"
   }
 }

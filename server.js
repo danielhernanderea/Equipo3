@@ -1,17 +1,25 @@
 //version inicial
 
-var express = require('express'),
-app = express(),
-port = process.env.PORT || 3000;
+var express = require('express');
+var mongoose = require('mongoose');
+var app = express();
+var Schema = mongoose.Schema;
+
+var Usuarios = require('./models/usuarios')
+//mongodb+srv://admin:<password>@cluster0.9xlde.mongodb.net/<dbname>?retryWrites=true&w=majority
+//Potl3XLjLCgno7s9
+
+mongoose.connect('mongodb+srv://admin:Potl3XLjLCgno7s9@cluster0.9xlde.mongodb.net/danadbank?retryWrites=true&w=majority', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => {
+  console.log("Conexión a MongoDB OK !");
+});
+
+var port = process.env.PORT || 3000;
 var path = require('path');
 
 var requestjson = require('request-json');
-var urlMlabRaiz = "https://api.mlab.com/api/1/databases/nbuendia/collections";
-var apiKey="apiKey=GOLqWa850qO8tsdCUdby6eq9eKPInBkt";
-var clienteMlabRaiz;
-
-var urlClientes = "https://api.mlab.com/api/1/databases/nbuendia/collections/Clientes?apiKey=GOLqWa850qO8tsdCUdby6eq9eKPInBkt";
-var clienteMLab = requestjson.createClient(urlClientes)
 
 app.listen(port);
 var bodyparser = require('body-parser');
@@ -23,56 +31,52 @@ app.use(function(req, res, next) {
   next()
 })
 
-var movimientosJSON = require('./movimientosv2.json');
-
 console.log('todo list RESTful API server started on: ' + port);
 
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'));
+
+app.post('/Usuarios', function(req, res)  {
+  console.log('POST /Usuarios')
+  console.log(req.body)
+  let usuario = new Usuarios()
+  usuario.nombre = req.body.nombre
+  usuario.apellidop = req.body.apellidop
+  usuario.apellidom = req.body.apellidom
+  usuario.password = req.body.password
+  usuario.movimientos = req.body.movimientos
+
+  usuario.save((err, usuarioGuardado) => {
+      if(err) res.status(500).send(`Error al guardar el usuario ${err}`)
+
+      res.status(200).send({usuario:  usuarioGuardado})
+      console.log('Usuario guardado' + usuarioGuardado)
+  })
+
 })
 
-app.post('/', function(req, res) {
-  res.send("Hemos recibido su petición post cambiada");
+app.get('/Usuarios/:idUsuario', function(req, res) {
+  let idUsuario = req.params.idUsuario
+  Usuarios.findById(idUsuario, (err, usuario) => {
+    if(err) return res.status(500).send(`Error al realizar la búsqueda de usuario ${err}`)
+
+    if(!usuario) return res.status(404).send(`El usuario no existe ${idUsuario}`)
+
+    res.status(200).send({usuario})
+  })
 })
 
-app.put('/', function(req, res) {
-  res.send("Hemos recibido su petición put");
+app.get('/Usuarios/', function(req, res) {
+  Usuarios.find({}, (err, usuario) => {
+    if(err) return res.status(500).send(`Error al realizar la búsqueda de usuarios ${err}`)
+
+    if(!Usuarios) return res.status(404).send(`No existen usuarios`)
+
+    res.status(200).send({usuario})
+  })
 })
 
-app.delete('/', function(req, res) {
-  res.send("Hemos recibido su petición delete");
-})
 
-app.get('/Clientes/:idcliente', function(req, res) {
-  res.send("Aquí tiene al cliente número " + req.params.idcliente);
-})
 
-app.get('/v1/Movimientos', function(req, res) {
-  res.sendfile('movimientosv1.json');
-})
-
-app.get('/v2/Movimientos', function(req, res) {
-  res.json(movimientosJSON);
-})
-
-app.get('/v2/Movimientos/:id', function(req, res) {
-  console.log(req.params.id);
-  res.send(movimientosJSON[req.params.id - 1]);
-})
-
-app.get('/v2/MovimientosQuery', function(req, res) {
-  console.log(req.query);
-  res.send("Se recibio el query");
-})
-
-app.post('/v2/Movimientos', function(req, res) {
-  var nuevo = req.body
-  nuevo.id = movimientosJSON.length + 1
-  movimientosJSON.push(nuevo)
-  res.send("Movimiento dado de alta")
-})
-
-app.get('/Clientes', function(req, res) {
+/*app.get('/Clientes', function(req, res) {
 
   clienteMLab.get('', function(err, resM, body) {
     if (err) {
@@ -83,13 +87,12 @@ app.get('/Clientes', function(req, res) {
   })
 })
 
-
-app.post('/Clientes', function(req, res) {
+/*app.post('/Clientes', function(req, res) {
   clienteMLab.post('', req.body, function(err, resM, body) {
     res.send(body)
   })
-})
-
+})*/
+/*
 
 app.post('/Login', function(req, res) {
   res.set("Access-Control-Allow-Headers", "Content-Type")
@@ -110,3 +113,9 @@ app.post('/Login', function(req, res) {
     }
   })
 })
+
+
+var userSchemaJSON = {
+  email:String,
+  password:String
+};*/
