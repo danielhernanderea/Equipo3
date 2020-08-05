@@ -4,11 +4,12 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
 var UsuarioSchema = Schema({
+  id: Number,
   nombre: String,
   apellidop: String,
   apellidom: String,
   password: String,
-  movimientos: String
+  movimientos: Array
 })
 
 module.exports = mongoose.model('Usuarios', UsuarioSchema)  //Checar este
