@@ -27,7 +27,22 @@ function getCriptomoneda(req, res){
   })
 }
 
+
+function consultaApi(req, res){
+  console.log('consulta Api Bitso  /Api')
+  var Request = require("request")
+  Request.get("https://api.bitso.com/v3/available_books/", (error, response, body) => {
+    if(error) {
+      console.dir(error)
+      return res.status(500).send(`NO se pudo consultar API de Bitso`)
+    }
+    //console.dir(JSON.parse(body))
+    res.status(200).send({body})
+  })
+}
+
 module.exports = {
   getIdCripto,
-  getCriptomoneda
+  getCriptomoneda,
+  consultaApi
 }

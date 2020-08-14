@@ -17,7 +17,7 @@ function getMovimiento(req,res) {
 }
 
 function getMovimientos(req, res){
-  console.log('GET movimiento /Movimientos')
+  console.log('GET  /Movimientos')
   Movimientos.find({}, (err, movimiento) => {
     if(err) return res.status(500).send(`Error al realizar la búsqueda de Movimientos ${err}`)
 
@@ -40,7 +40,7 @@ function saveMovimiento(req, res){
   movimiento.idcripto = req.body.idcripto
   movimiento.montogastado = req.body.montogastado
   movimiento.comision = req.body.comision
-  console.log(movimiento.save)
+
   movimiento.save((err, movimientoGuardado) => {
       if(err) res.status(500).send(`Error al guardar el movimiento ${err}`)
 
@@ -48,6 +48,7 @@ function saveMovimiento(req, res){
       console.log('movimiento guardado' + movimientoGuardado)
   })
 }
+
 
 function updateMovimiento(req, res){
   console.log('PUT update /Movimientos')
@@ -75,7 +76,6 @@ function deleteMovimiento(req, res){
     })
   })
 }
-
 
 
 module.exports = {

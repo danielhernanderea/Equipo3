@@ -1,7 +1,7 @@
 'use strict'
 
 var Usuarios = require('../models/usuarios')
-
+var bcrypt = require('bcrypt-nodejs')
 
 function getUsuario(req,res) {
   console.log('GET usuarios  /Usuarios')
@@ -10,6 +10,19 @@ function getUsuario(req,res) {
     if(err) return res.status(500).send(`Error al realizar la búsqueda de usuario ${err}`)
 
     if(!usuario) return res.status(404).send(`El usuario no existe ${idUsuario}`)
+
+    res.status(200).send({usuario})
+  })
+
+}
+
+function getEmail(req,res) {
+  console.log('GET email  /Usuarios')
+  let email = req.params.email
+  Usuarios.find({email:email}, (err, usuario) => {
+    if(err) return res.status(500).send(`Error al realizar la búsqueda de usuario ${err}`)
+
+    if(!usuario) return res.status(404).send(`El usuario no existe con email: ${email}`)
 
     res.status(200).send({usuario})
   })
@@ -34,8 +47,28 @@ function saveUsuario(req, res){
   usuario.nombre = req.body.nombre
   usuario.apellidop = req.body.apellidop
   usuario.apellidom = req.body.apellidom
+  usuario.email = req.body.email
   usuario.password = req.body.password
   usuario.movimientos = req.body.movimientos
+  usuario.saldo = req.body.saldo
+
+
+  bcrypt.genSalt(10,  (err, salt) => {
+    if (err) {
+      throw err
+    } else {
+      bcrypt.hash(usuario.password, salt, null, (err, hash) => {
+        if (err) {
+          throw err
+        } else {
+          usuario.password=hash
+        }
+      })
+    }
+  })
+
+  console.log(' post hash')
+  console.log(usuario.password)
 
   usuario.save((err, usuarioGuardado) => {
       if(err) res.status(500).send(`Error al guardar el usuario ${err}`)
@@ -77,6 +110,7 @@ function deleteUsuario(req, res){
 module.exports = {
   getUsuario,
   getUsuarios,
+  getEmail,
   saveUsuario,
   updateUsuario,
   deleteUsuario

@@ -1,0 +1,26 @@
+<form id="Login" method="post">
+ Nombre: <input type="text" name="nombre" value=""><br>
+ Apellido Paterno: <input type="text" name="apellidop" value=""><br>
+ Apellido Materno: <input type="text" name="apellidom" value=""><br>
+ Email: <input type="email" name="email" value="" placeholder="escribe tu correo"><br>
+ Password: <input type="password" name="password" value="" placeholder="escribe tu password"><br>
+ <br><br>
+ <input type="submit" value="Login">
+ </form>
+
+ <script type="text/javascript">
+ const formLogin=document.querySelector('#Login')
+ const formData = new FormData(formLogin)
+
+ formLogin.addEventListener('submit', event => {
+   event.preventDefault()
+   fetch('/signin', {
+     method: 'POST',
+     body: formData
+   })
+   .then(res => res.json())
+   .then(data => {
+     localStorage.setItem('token', data.token)
+  })
+ })
+ </script>
