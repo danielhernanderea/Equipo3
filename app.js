@@ -32,9 +32,11 @@ app.delete('/Usuarios/:idusuario', usuarioControllers.deleteUsuario)
 
 app.put('/Usuarios', usuarioControllers.updateUsuario)
 
+//app.get('/Login', usuarioControllers.login)
+
 app.get('/Movimientos/:idusuario', movimientosControllers.getMovimiento)
 
-//app.get('/Movimientos/', movimientosControllers.getMovimientos)
+app.get('/Movimientos/', movimientosControllers.getMovimientos)
 
 app.post('/Movimientos', movimientosControllers.saveMovimiento)
 
@@ -47,7 +49,7 @@ app.get('/Criptomonedas/:idcripto', criptomonedasControllers.getIdCripto)
 app.get('/Api', criptomonedasControllers.consultaApi)
 
 app.post('/Registro', authControllers.singUp)
-app.post('/signin', authControllers.signIn)
+app.get('/Login', authControllers.signIn)
 
 app.get('/private', auth, (req, res) => {
   console.log("/private")
@@ -57,8 +59,8 @@ app.get('/private', auth, (req, res) => {
    console.log("Acceso oks")
 })
 
-app.get('/Login', (req, res)=>{
+/*app.get('/Login', (req, res)=>{
   res.render('login')
-})
+*/
 
 module.exports = app

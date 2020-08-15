@@ -29,6 +29,23 @@ function getEmail(req,res) {
 
 }
 
+function login(req,res) {
+  console.log('GET login  /Usuarios')
+  var email = req.params.email
+  var password = req.params.password
+  console.log(req.params.email)
+  console.log(req.params.password)
+  console.log(Usuarios.find({email:email,password:password}))
+  Usuarios.find({email:email,password:password}, (err, usuario) => {
+    if(err) return res.status(500).send(`Error al iniciar sesión ${err}`)
+
+    if(!usuario) return res.status(404).send(`Usuario o password incorrectos`)
+
+    res.status(200).send({usuario})
+  })
+
+}
+
 function getUsuarios(req, res){
   console.log('GET usuario /Usuarios')
   Usuarios.find({}, (err, usuario) => {
@@ -113,5 +130,6 @@ module.exports = {
   getEmail,
   saveUsuario,
   updateUsuario,
-  deleteUsuario
+  deleteUsuario,
+  login
 }

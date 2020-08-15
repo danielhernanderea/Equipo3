@@ -6,7 +6,7 @@ var bcrypt = require('bcrypt-nodejs')
 var crupto = require('crypto')
 
 var UsuarioSchema = Schema({
-  id: Number,
+  id: String,
   nombre: String,
   apellidop: String,
   apellidom: String,

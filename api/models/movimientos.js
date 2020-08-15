@@ -5,7 +5,7 @@ var Schema = mongoose.Schema
 
 var MovimientoSchema = Schema({
     id: Number,
-    idusuario: Number,
+    idusuario: String,
     tipooperacion: String,
     descripcion: String,
     fecha: String,

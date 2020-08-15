@@ -4,8 +4,9 @@ var Movimientos = require('../models/movimientos')
 
 
 function getMovimiento(req,res) {
-  console.log('GET Movimientos por usuairo /Movimientos')
+  console.log('GET Movimientos por usuario /Movimientos')
   let idusuario = req.params.idusuario
+  console.log(req.params.idusuario)
   Movimientos.find({idusuario:idusuario}, (err, movimiento) => {
     if(err) return res.status(500).send(`Error al realizar la búsqueda de movimiento ${err}`)
 

@@ -51,12 +51,31 @@ function singUp (req, res) {
 
 
 function signIn (req, res) {
-//  var usuario = new Usuarios
-  Usuarios.find({email: req.body.email}, (err, usuario) => {
+  console.log("function signIn")
+  var usuario = new Usuarios({
+    email: req.body.email,
+    password: req.body.password
+  })
+
+  /*bcrypt.compare(req.body.password, 'superSecret', function(err, res) {
+    if(req.body.password != user.password){
+      res.json({success: false, message: 'passwords do not match'});
+    } else {
+      // Send JWT
+    }*/
+
+ console.log("antes de usuarios.find")
+ console.log(Usuarios.find({email:req.body.email,password:usuario.password}))
+
+  var query = {email:req.body.email,password:usuario.password}
+
+   Usuarios.find(query, (err, usuario) => {
+//  Usuarios.find({email:req.body.email,password:usuario.password}, (err, usuario) => {
     if(err) return res.status(500).send({message: err})
     if(!usuario) return res.status(404).send({message: 'No existe el usuario'})
 
-    req.usuario = usuario //checar
+    req.usuario = usuario
+
     res.status(200).send({
       message: "Login exitoso",
       token: service.createToken(usuario)
