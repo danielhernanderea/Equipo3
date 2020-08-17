@@ -48,8 +48,9 @@ app.get('/Criptomonedas/:idcripto', criptomonedasControllers.getIdCripto)
 
 app.get('/Api', criptomonedasControllers.consultaApi)
 
-app.post('/Registro', authControllers.singUp)
-app.get('/Login', authControllers.signIn)
+app.post('/Registro', authControllers.registro)
+
+app.post('/Login', authControllers.login)
 
 app.get('/private', auth, (req, res) => {
   console.log("/private")

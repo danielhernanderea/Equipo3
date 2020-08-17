@@ -3,10 +3,9 @@
 var Usuarios = require('../models/usuarios')
 var service = require('../../service')
 var bcrypt = require('bcrypt-nodejs')
-//var auth = require('../models/auth')
 
-function singUp (req, res) {
-  console.log("funcion signup")
+function registro (req, res) {
+  console.log("POST /Registro ")
   var usuario = new Usuarios({
     id: req.body.idusuario,
     nombre: req.body.nombre,
@@ -16,74 +15,63 @@ function singUp (req, res) {
     password: req.body.password
   })
   usuario.saldo=25000
-      //console.log(req.body.email)
-    //  console.log(Usuarios.find({email:req.body.email}))
-//  Usuarios.find({email:req.body.email}, (err, usuario) => {
+  var query = {email:req.body.email}
 
-    bcrypt.genSalt(10,  (err, salt) => {
-      if (err) {
-        throw err
-      } else {
-        bcrypt.hash(usuario.password, salt, null, (err, hash) => {
-          if (err) {
-            throw err
-          } else {
-            usuario.password=hash
-          }
-        })
-      }
-    })
+  Usuarios.findOne(query, (err, document) => {
+    if(err) return res.status(500).send({message: err})
+    if(document!=null) return res.status(404).send({message: 'El correo ya esta registrado'})
+    if(document==null) {
+      bcrypt.genSalt(10,  (err, salt) => {
+        if (err) {
+          throw err
+        } else {
+          bcrypt.hash(usuario.password, salt, null, (err, hash) => {
+            if (err) {
+              throw err
+            } else {
+              usuario.password=hash
+            }
+          })
+        }
+      })
 
-  //  if(usuario) {
       usuario.save((err) => {
         if(err) res.status(500).send(`Error al realizar la búsqueda de usuario ${err}`)
         return res.status(200).send({token: service.createToken(usuario)})
       })
-    //}
-    /*else {
-    res.status(200).send({
-      message: "El usuario ya existe",
-      token: service.createToken(usuario)
-    })
-  }*/
-//  })
+    }
+  })
 }
 
 
-function signIn (req, res) {
-  console.log("function signIn")
+function login (req, res) {
+  console.log("POST /Login ")
   var usuario = new Usuarios({
     email: req.body.email,
     password: req.body.password
   })
 
-  /*bcrypt.compare(req.body.password, 'superSecret', function(err, res) {
-    if(req.body.password != user.password){
-      res.json({success: false, message: 'passwords do not match'});
-    } else {
-      // Send JWT
-    }*/
+  var query = {email:req.body.email}
 
- console.log("antes de usuarios.find")
- console.log(Usuarios.find({email:req.body.email,password:usuario.password}))
-
-  var query = {email:req.body.email,password:usuario.password}
-
-   Usuarios.find(query, (err, usuario) => {
-//  Usuarios.find({email:req.body.email,password:usuario.password}, (err, usuario) => {
+   Usuarios.findOne(query, (err, document) => {
     if(err) return res.status(500).send({message: err})
-    if(!usuario) return res.status(404).send({message: 'No existe el usuario'})
-
-    req.usuario = usuario
-
-    res.status(200).send({
-      message: "Login exitoso",
-      token: service.createToken(usuario)
-    })
+    if(document==null) return res.status(404).send({message: 'No existe el usuario'})
+    if(document!=null) {
+      bcrypt.compare(usuario.password, document.password,function(err,result) {
+        if(result)
+          res.status(200).send({status:200,message:"Sesion Iniciada correctamente",
+          usuario:{id:document.id,nombre:document.nombre,apellidop:document.apellidop,apellidom:document.apellidom,
+                  email:document.email,saldo:document.saldo,},
+          token:service.createToken(document)});
+        else
+          res.status(404).send({status:404,message:"Usuario y contraseña incorrectos"});
+      })
+    }
   })
 }
 
+
 module.exports = {
-  singUp,
-  signIn
+  registro,
+  login
 }
