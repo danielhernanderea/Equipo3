@@ -1,7 +1,7 @@
 'use strict'
 
 var Movimientos = require('../models/movimientos')
-
+var Usuarios = require('../models/usuarios')
 
 function getMovimiento(req,res) {
   console.log('GET Movimientos por usuario /Movimientos')
@@ -30,8 +30,8 @@ function getMovimientos(req, res){
 
 function saveMovimiento(req, res){
   console.log('POST save /Movimientos')
-  console.log(req.body)
   let movimiento = new Movimientos()
+  let usuario = new Usuarios()
   movimiento.id = req.body.idmovimiento
   movimiento.idusuario = req.body.idusuario
   movimiento.tipooperacion = req.body.tipooperacion
@@ -41,13 +41,33 @@ function saveMovimiento(req, res){
   movimiento.idcripto = req.body.idcripto
   movimiento.montogastado = req.body.montogastado
   movimiento.comision = req.body.comision
-
+  let saldoUsuario
+  let query = {id:req.body.idusuario}
   movimiento.save((err, movimientoGuardado) => {
-      if(err) res.status(500).send(`Error al guardar el movimiento ${err}`)
-
-      res.status(200).send({movimiento:  movimientoGuardado})
-      console.log('movimiento guardado' + movimientoGuardado)
-  })
+      if(err) {
+        res.status(500).send(`Error al guardar el movimiento ${err}`)
+      } else {
+        Usuarios.findOne(query, (err, document) => {
+          if(err) return res.status(500).send({message: err})
+          if(document==null) return res.status(404).send({message: 'No existe el usuario'})
+          if(document!=null) {
+            saldoUsuario = document.saldo
+            saldoUsuario = saldoUsuario-movimiento.montogastado
+            Usuarios.findOne(query)
+            .then((usuario) => {
+              usuario.saldo = saldoUsuario
+              usuario
+                .save()
+                .then(() => {
+                  //res.status(200).send({saldo:  saldoUsuario})
+                  //console.log('saldo actualizado' + saldoUsuario)
+                  res.status(200).send({status:200,message:"Movimiento y saldo de usuario registrados correctamente"})
+                })
+            })
+        }
+      })
+  }
+})
 }
 
 

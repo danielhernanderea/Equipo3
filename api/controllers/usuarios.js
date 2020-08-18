@@ -107,7 +107,38 @@ function updateUsuario(req, res){
     console.log('Usuario Actualizado' + usuarioActualizado)
   })
 }
+/*
+function updateMontoUsuario(req, res){
+  console.log('PUT update monto /Usuarios')
+  let idUsuario = req.params.idUsuario
+  let update = req.body
+  let monto = req.montogastado
 
+  let qusuario = { idusuario: 'idUsuario' };
+
+  let query = {id:req.params.idUsuario}
+  let saldo
+  console.log("findone")
+  Usuarios.findOne(query, (err, document) => {
+    if(err) return res.status(500).send({message: err})
+    if(document==null) return res.status(404).send({message: 'No existe el usuario'})
+    if(document!=null) {
+          res.status(200).send({status:200,message:"Saldo usuario",
+          usuario:{saldo:document.saldo},
+          token:service.createToken(document)});
+    }
+  })
+
+  saldo = document.saldo - monto
+
+  usuario.findOneAndUpdate(idUsuario, saldo, (err, montoActualizado) =>{
+    if(err) rest.status(500).send(`Error al actualizar el saldo del usuario  ${err}`)
+
+    rest.status(200).send({usuario:  montoActualizado})
+    console.log('Monto usuario Actualizado' + montoActualizado)
+  })
+}
+*/
 function deleteUsuario(req, res){
   console.log('DELETE delete /Usuarios')
   let idUsuario = req.params.idUsuario
