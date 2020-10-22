@@ -1,0 +1,106 @@
+<script type="text/javascript"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.2.3/css/bulma.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<div class="flex-grow-1 d-flex flex-column">
+    <nav class="navbar navbar-expand-md navbar-light bg-light navbar-expand-md">
+        <a class="navbar-brand" href="#">Reto Bit</a>
+        <ul class="navbar-nav w-100">
+            <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
+        </ul>
+    </nav>
+    <!-- /bootstrap nav -->
+    <div class="container-fluid">
+        <!-- bootstrap nav -->
+        <div class="row">
+            <div class="col-xl-9 col-lg-10 mx-auto" id="content">
+                <div class="row">
+                    <div class="col-md pt-5">
+                       
+
+                        <section id="forms" class="py-3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Login</h4>
+
+                                    <!-- Form -->
+                                    <form role="form">
+                                        <div class="form-group row">
+                                            <label class="col-md-2 col-form-label form-control-label text-muted">Email or username</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" value="Jane">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group row">
+                                            <label class="col-lg-2 col-form-label form-control-label text-muted">Password</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" type="password" value="11111122333">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-2 col-form-label form-control-label"></label>
+                                            <div class="col-lg-10">
+                                                <input type="reset" class="btn btn-outline-secondary mr-2" value="Cancel">
+                                                <input type="button" class="btn btn-primary mr-2" value="Submit">
+                                                <div class="custom-control custom-checkbox d-inline">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck" checked="">
+                                                    <label class="custom-control-label" for="customCheck">Check me out</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	
+	$(document).on("button", "#frmregistro", function(evt) {
+		evt.preventDefault();
+    
+	 		
+
+
+          
+
+ 			data = {
+                "email": email,
+                "password": password
+            };
+            
+            console.log(data);
+
+			$.ajax({
+				url : "http://localhost:3000/login",
+				type : "GET",
+				cache : false,
+				contentType : 'application/json',
+				dataType : "json",
+				processData : false,
+				data : JSON.stringify(data),
+			}).done(function(data) {
+                console.log(data);
+                if(data.token!=null){
+                    console.log("entro");
+                    $("#aModal").modal("hide");
+                    alert ("Acceso Correcto"); 
+                }
+ 			}).fail( function() {
+                alert ("Nos e completo correctamente el acceso"); 
+            });
+		 
+	});
+
+	$("#miModal").modal("show");
+
+</script>
