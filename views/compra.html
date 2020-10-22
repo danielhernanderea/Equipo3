@@ -8,54 +8,61 @@
     <title>Document</title>
 </head>
 <body>
-    <form>
-        <h3>Compra de Criptomonedas</h3>
-        <!-- Form para lista de usuarios -->
-        <div class="form-group">                        
-            <label for="seleccionarUsuario">Usuario</label>
-            <select class="form-control" id="idusuario">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>                
-            </select>
+    <div class="container">
+        <div class="column centered-form">
+            <form>
+                <h3>Compra de Criptomonedas</h3>
+                <!-- Form para lista de usuarios -->
+                <div class="form-group .align-items-center">                        
+                    <label for="seleccionarUsuario">Usuario</label>
+                    <select class="form-control" id="idusuario">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>                
+                    </select>
+                </div>
+        
+                <!-- Form para tipo de operacion -->
+                <div class="form-group">            
+                    <label for="seleccionarOperacion">Tipo de operación</label>
+                    <select class="form-control" id="tipooperacion">
+                        <option>Compra</option>
+                        <option>Venta</option>                
+                    </select>
+                </div>
+        
+                <!-- Form para lista de criptomonedas -->
+                <div class="form-group">            
+                    <label for="seleccionarCripto">Criptomoneda</label>
+                    <select class="form-control" id="idcripto">
+                        <option>BTC - Bitcoin</option>
+                        <option>ETH - Ethereum</option>
+                        <option>USTD - Tether</option>
+                        <option>XRP - XRP</option>                
+                        <option>BCH - Bitcoin Cash</option>
+                    </select>
+                </div>
+        
+                <!-- Form para monto -->
+                <div class="form-group">
+                    <label for="descripcionOperacion">Monto de operación</label>
+                    <input class="form-control form-control-sm" type="text" id="montogastado">            
+                </div>
+        
+                <!-- Form para descripcion de operacion -->
+                <div class="form-group">
+                    <label for="descripcionOperacion">Descripción de operación</label>
+                    <textarea class="form-control" id="descripcion" rows="2"></textarea>
+                </div>
+                
+                <!-- Boton para Submit de Operacion -->
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-primary mb-2">Realizar operación</button>
+                </div>
+                
+            </form>
         </div>
-
-        <!-- Form para tipo de operacion -->
-        <div class="form-group">            
-            <label for="seleccionarOperacion">Tipo de operacion</label>
-            <select class="form-control" id="tipooperacion">
-                <option>Compra</option>
-                <option>Venta</option>                
-            </select>
-        </div>
-
-        <!-- Form para lista de criptomonedas -->
-        <div class="form-group">            
-            <label for="seleccionarCripto">Criptomoneda</label>
-            <select class="form-control" id="idcripto">
-                <option>BTC - Bitcoin</option>
-                <option>ETH - Ethereum</option>
-                <option>USTD - Tether</option>
-                <option>XRP - XRP</option>                
-                <option>BCH - Bitcoin Cash</option>
-            </select>
-        </div>
-
-        <!-- Form para monto -->
-        <div class="form-group">
-            <label for="descripcionOperacion">Monto de operación</label>
-            <input class="form-control form-control-sm" type="text" id="montogastado">            
-        </div>
-
-        <!-- Form para descripcion de operacion -->
-        <div class="form-group">
-            <label for="descripcionOperacion">Descripción de operación</label>
-            <textarea class="form-control" id="descripcion" rows="2"></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary mb-2">Realizar operación</button>
-    </form>
-
+    </div>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
