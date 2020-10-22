@@ -84,6 +84,11 @@
 	$(document).on("submit", "#frmregistro", function(evt) {
 		evt.preventDefault();
     
+          var emil=$('#email').val();
+            var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+            if( !emailReg.test( emil ) ) {
+                alert('Por favor ingrese un email valido');
+                } else {
 	 		usuario = $("#idusuario").val();
             nombre = $("#nombre").val();
             apellidop = $("#apellidop").val();
@@ -128,6 +133,7 @@
             }); 
             }
 
+        }
 
 
           
@@ -135,6 +141,10 @@
 		 
 	});
 
-	$("#miModal").modal("show");
+    $("#miModal").modal("show");
+    
+    
+              
+  
 
 </script>
