@@ -10,6 +10,27 @@ var Usuarios = require('./api/models/usuarios')
 var Movimientos = require('./api/models/movimientos')
 var Categorias = require('./api/models/criptomonedas')
 
+var express = require('express'); // Get the module
+
+
+app.use('/views', express.static('views'));
+
+app.route({
+  method: 'GET',
+  path: '/views',
+  handler: function (request, reply) {
+      Request.get('http://localhost:3000/Movimientos/prueba@bbva.com', function (error, response, body) {
+          if (error) {
+              throw error;
+          }
+
+          const data = JSON.parse(body);
+          console.log(data);
+          reply.view('index.html', { result: data });
+      });
+  }
+});
+
 
 mongoose.connect(config.db, {
   useNewUrlParser: true,
@@ -25,7 +46,7 @@ mongoose.connect(config.db, {
 })
 
 
-/*
+
 app.post('/Login', function(req, res) {
   res.set("Access-Control-Allow-Headers", "Content-Type")
   var email = req.body.email
@@ -50,4 +71,4 @@ app.post('/Login', function(req, res) {
 var userSchemaJSON = {
   email:String,
   password:String
-};*/
+};
