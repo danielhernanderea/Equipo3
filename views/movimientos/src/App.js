@@ -21,10 +21,12 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
+let user = 'prueba'
+
 
 class OperationsListView extends React.Component {
     state = {
-        loggedUser: 'prueba@bbva.com',
+        loggedUser: user + '@bbva.com',
         records: []
     }
     
