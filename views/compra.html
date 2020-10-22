@@ -10,15 +10,13 @@
 <body>
     <div class="container">
         <div class="column centered-form">
-            <form>
+            <form id="formCompra">
                 <h3>Compra de Criptomonedas</h3>
                 <!-- Form para lista de usuarios -->
                 <div class="form-group .align-items-center">                        
                     <label for="seleccionarUsuario">Usuario</label>
                     <select class="form-control" id="idusuario">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>                
+                        <option>BUSN123ABC</option>                                       
                     </select>
                 </div>
         
@@ -46,7 +44,7 @@
                 <!-- Form para monto -->
                 <div class="form-group">
                     <label for="descripcionOperacion">Monto de operación</label>
-                    <input class="form-control form-control-sm" type="text" id="montogastado">            
+                    <input class="form-control form-control-sm" type="text" id="montogastado" placeholder="$">            
                 </div>
         
                 <!-- Form para descripcion de operacion -->
@@ -64,5 +62,45 @@
         </div>
     </div>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        
+        const fecha = date.getDate();
+        $(document).on("submit", "#formCompra", function(evt)
+        {    
+                     
+            idUsuario = $("#idusuario").val();
+            tipoOperacion = $("#tipooperacion").val();
+            idCripto = $("#idcripto").val();
+            montoGastado = $("#montogastado").val();
+            descripcionOperacion = $("#descripcion").val();
+
+            data = {
+				"idusuario" : idUsuario,
+                "tipooperacion" : tipoOperacion,
+                "descripcion": descripcionOperacion,
+                "idcripto": idCripto,
+                "montogastado": montoGastado,
+                "fecha"
+                
+            };
+
+            $.ajax({
+				url : "http://localhost:3000/Movimientos",
+				type : "POST",
+				cache : false,
+				contentType : 'application/json',
+				dataType : "json",
+				processData : false,
+				data : JSON.stringify(data),
+			}).done(function(data) {
+                console.log(data);                
+ 			}).fail( function() {
+                alert ("La operación no pudo realizarse."); 
+            }); 
+            }
+
+        });
+    </script>
+
 </body>
 </html>
