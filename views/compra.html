@@ -80,9 +80,8 @@
                 "descripcion": descripcionOperacion,
                 "idcripto": idCripto,
                 "montogastado": montoGastado,
-                "fecha"
-                
-            };
+                "fecha": fecha                
+            }
 
             $.ajax({
 				url : "http://localhost:3000/Movimientos",
@@ -96,8 +95,7 @@
                 console.log(data);                
  			}).fail( function() {
                 alert ("La operación no pudo realizarse."); 
-            }); 
-            }
+            });             
 
         });
     </script>
