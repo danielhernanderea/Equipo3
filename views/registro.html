@@ -1,0 +1,126 @@
+<script type="text/javascript"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.2.3/css/bulma.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+ 
+
+<div class="container">
+	<div class="row centered-form">
+
+		<div
+			class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-2">
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Registro</h3>
+				</div>
+			</div>
+			<a href="#aModal"  class="btn btn-large btn-primary" data-toggle="modal">Agregar</a>
+  
+			<div id="aModal" class="modal fade">
+			   <div class="modal-dialog">
+				   <div class="modal-content">
+					   <div class="modal-header">
+						   <h4 class="modal-title">Registro de Usuarios</h4>
+					   </div>
+					   <div class="modal-body">
+						   <div class="panel-body">
+							   <form id="frmregistro" role="form">
+
+								   <div class="form-group">
+									   <input type="text" name="idusuario" id="idusuario"
+										   class="form-control input-sm" placeholder="Usuario">
+								   </div>
+								   
+								   <div class="form-group">
+									   <input type="text" name="nombre" id="nombre"
+										   class="form-control input-sm" placeholder="Nombre">
+                                   </div>
+                                   
+                                   <div class="form-group">
+                                    <input type="text" name="apellidop" id="apellidop"
+                                        class="form-control input-sm" placeholder="Apellido Paterno">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="text" name="apellidom" id="apellidom"
+                                            class="form-control input-sm" placeholder="Apellido Materno">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                            <input type="text" name="email" id="email"
+                                                class="form-control input-sm" placeholder="Email">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="text" name="password" id="password"
+                                            class="form-control input-sm" placeholder="Password">
+                                     </div>
+
+								   <input type="submit" value="Registrar"
+									   class="btn btn-info btn-block">
+
+							   </form>
+						   </div>
+					   </div>
+					   <div class="modal-footer">
+						   <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					   </div>
+				   </div>
+			   </div>
+            </div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	
+	$(document).on("submit", "#frmregistro", function(evt) {
+		evt.preventDefault();
+    
+	 		usuario = $("#idusuario").val();
+            nombre = $("#nombre").val();
+            apellidop = $("#apellidop").val();
+            apellidom = $("#apellidom").val();
+            email = $("#email").val();
+            password = $("#password").val();
+
+
+          
+
+ 			data = {
+				"idusuario" : usuario,
+                "nombre" : nombre,
+                "apellidop": apellidop,
+                "apellidom": apellidom,
+                "email": email,
+                "password": password
+            };
+            
+            console.log(data);
+
+			$.ajax({
+				url : "http://localhost:3000/Registro",
+				type : "POST",
+				cache : false,
+				contentType : 'application/json',
+				dataType : "json",
+				processData : false,
+				data : JSON.stringify(data),
+			}).done(function(data) {
+                console.log(data);
+                if(data.token!=null){
+                    console.log("entro");
+                    $("#aModal").modal("hide");
+                    alert ("Usuario registrado correctamente"); 
+                }
+ 			}).fail( function() {
+                alert ("El correo ya esta registrado"); 
+            });
+		 
+	});
+
+	$("#miModal").modal("show");
+
+</script>
