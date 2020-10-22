@@ -71,7 +71,7 @@
 						   </div>
 					   </div>
 					   <div class="modal-footer">
-						   <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						   <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar">Cerrar</button>
 					   </div>
 				   </div>
 			   </div>
@@ -124,9 +124,10 @@
 			}).done(function(data) {
                 console.log(data);
                 if(data.token!=null){
-                    console.log("entro");
-                    $("#aModal").modal("hide");
+                     $("#aModal").modal("hide");
                     alert ("Usuario registrado correctamente"); 
+                    $("#frmregistro").trigger("reset");
+
                 }
  			}).fail( function() {
                 alert ("El correo ya esta registrado"); 
