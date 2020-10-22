@@ -28,9 +28,9 @@
                                     <!-- Form -->
                                     <form role="form">
                                         <div class="form-group row">
-                                            <label class="col-md-2 col-form-label form-control-label text-muted">Email or username</label>
+                                            <label class="col-md-2 col-form-label form-control-label text-muted">Username</label>
                                             <div class="col-md-10">
-                                                <input class="form-control" type="text" value="Jane">
+                                                <input class="form-control" type="text" value="Username">
                                             </div>
                                         </div>
                                         
@@ -44,12 +44,13 @@
                                             <label class="col-lg-2 col-form-label form-control-label"></label>
                                             <div class="col-lg-10">
                                                 <input type="reset" class="btn btn-outline-secondary mr-2" value="Cancel">
-                                                <input type="button" class="btn btn-primary mr-2" value="Submit">
+                                                <input type="button" class="btn btn-primary mr-2" value="Submit" onclick="LogInPost()">
                                                 <div class="custom-control custom-checkbox d-inline">
                                                     <input type="checkbox" class="custom-control-input" id="customCheck" checked="">
                                                     <label class="custom-control-label" for="customCheck">Check me out</label>
                                                 </div>
                                             </div>
+                                        <input type="button" class="btn btn-outline-secondary mr-2" value="Registro">
                                         </div>
                                     </form>
 
@@ -102,5 +103,31 @@
 	});
 
 	$("#Login").modal("show");
+
+</script>
+
+
+<script>
+    function LogInPost() {
+        data = {
+                "email": "prueba@bbva.com",
+                "password": "123456"
+            };
+
+        fetch('http://localhost:3000/Login', {
+        method: 'POST', // or 'PUT'
+        headers: {
+                    'Content-Type': 'application/json',
+                 },
+        body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+        console.log('Success:', data);
+        })
+        .catch((error) => {
+        console.error('Error:', error);
+        });
+  }
 
 </script>
