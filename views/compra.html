@@ -78,9 +78,10 @@
 				"idusuario" : idUsuario,
                 "tipooperacion" : tipoOperacion,
                 "descripcion": descripcionOperacion,
+                "fecha": fecha,
+                "preciocompra": '1000',
                 "idcripto": idCripto,
-                "montogastado": montoGastado,
-                "fecha": fecha                
+                "montogastado": montoGastado,                                
             }
 
             $.ajax({
@@ -96,6 +97,7 @@
  			}).fail( function() {
                 alert ("La operación no pudo realizarse."); 
             });             
+
 
         });
     </script>
